@@ -3,4 +3,7 @@
     <string name="tab_text_1">Emprestimos</string>
     <string name="tab_text_2">Equipamentos</string>
     <string name="tab_text_3">Listagem</string>
+    <string name="emprestimo">emprestimo</string>
+    <string name="equipamentos">equipamentos</string>
+    <string name="listagem">listagem</string>
 </resources>
