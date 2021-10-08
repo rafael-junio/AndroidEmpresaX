@@ -1,15 +1,12 @@
 package com.example.androidempresax;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.androidempresax.ui.main.CadastroSectionsPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,32 +15,30 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.androidempresax.ui.main.SectionsPagerAdapter;
-import com.example.androidempresax.databinding.ActivityMainBinding;
+import com.example.androidempresax.databinding.ActivityCadastroBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class CadastroActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    private ActivityCadastroBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityCadastroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        CadastroSectionsPagerAdapter sectionsPagerAdapter = new CadastroSectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = binding.fab;
 
-        fab.setOnClickListener(view -> {
-
-            Intent it = new Intent(MainActivity.this, CadastroActivity.class);
-            startActivity(it);
-
-        });
     }
 
+    public void efetuarEmprestimo(View view) {
+    }
+
+    public void cadastrarEquipamento(View view) {
+    }
 }

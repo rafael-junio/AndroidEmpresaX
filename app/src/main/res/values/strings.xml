@@ -6,4 +6,9 @@
     <string name="emprestimo">emprestimo</string>
     <string name="equipamentos">equipamentos</string>
     <string name="listagem">listagem</string>
+    <string name="title_activity_cadastro">CadastroActivity</string>
+    <string name="cadastro_tab_text_1">Cadastro de Emprestimos</string>
+    <string name="cadastro_tab_text_2">Cadastro de Equipamentos</string>
+
+
 </resources>
