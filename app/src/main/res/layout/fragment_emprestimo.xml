@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragmentEmprestimo"
@@ -9,9 +9,25 @@
     tools:context=".fragments.EmprestimoFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/emprestimo" />
+        android:id="@+id/textView"
+        android:layout_width="167dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="16dp"
+        android:text="Emprestimos efetivados"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/listEmprestimos"
+        android:layout_width="379dp"
+        android:layout_height="641dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="23dp"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/darker_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

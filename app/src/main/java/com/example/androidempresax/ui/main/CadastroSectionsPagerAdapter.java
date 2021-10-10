@@ -36,8 +36,7 @@ public class CadastroSectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
-        String param1 = "Param1";
-        String param2 = "Param2";
+
         switch (position) {
             case 0:
                 fragment = CadastroEmprestimoFragment.newInstance();
