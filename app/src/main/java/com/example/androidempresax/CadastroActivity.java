@@ -1,5 +1,6 @@
 package com.example.androidempresax;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,9 +26,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidempresax.ui.main.SectionsPagerAdapter;
@@ -36,6 +40,8 @@ import java.util.ArrayList;
 
 public class CadastroActivity extends AppCompatActivity {
 
+    private ViewPager viewPager;
+
     private ActivityCadastroBinding binding;
     private DBHelperEquipamento helperEquipamento = new DBHelperEquipamento(this);
     private DBHelperEmprestimo helperEmprestimo = new DBHelperEmprestimo(this);
@@ -43,6 +49,8 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText edtNome;
     private EditText edtMarca;
     private EditText edtPhone;
+    private TextView edtID;
+    private Button btnVariavel;
 
     private ListView listEquipamentos;
 
@@ -53,15 +61,10 @@ public class CadastroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         binding = ActivityCadastroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        listEquipamentos = findViewById(R.id.listEquipamentos);
-//        registerForContextMenu(listEquipamentos);
         CadastroSectionsPagerAdapter sectionsPagerAdapter = new CadastroSectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = binding.viewPager;
+        viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
@@ -71,18 +74,8 @@ public class CadastroActivity extends AppCompatActivity {
 
     public void onResume(){
         super.onResume();
-//        preencheListaEquipamento();
     }
 
-    public void preencheListaEquipamento(){
-        helperEquipamento = new DBHelperEquipamento(CadastroActivity.this);
-        arrayListEquipamento = helperEquipamento.selectAllEquipamentos();
-        helperEquipamento.close();
-        if (listEquipamentos != null) {
-            equipamentoArrayAdapter = new ArrayAdapter<Equipamento>(CadastroActivity.this, android.R.layout.simple_list_item_1, arrayListEquipamento);
-            listEquipamentos.setAdapter(equipamentoArrayAdapter);
-        }
-    }
 
     public void efetuarEmprestimo(View view) {
         edtNome = findViewById(R.id.textPersonName);
@@ -112,24 +105,43 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ResourceType")
     public void cadastrarEquipamento(View view) {
         edtNome = findViewById(R.id.textEquipName);
         edtMarca = findViewById(R.id.textMarca);
         String nome = edtNome.getText().toString();
         String marca = edtMarca.getText().toString();
+        btnVariavel = findViewById(R.id.buttonEquip);
 
         if (!nome.equals("") && !marca.equals("")) {
             Equipamento e = new Equipamento();
             e.setNomeEquip(nome);
             e.setMarca(marca);
-            helperEquipamento.inserirEquipamento(e);
-            Snackbar.make(view, "Equipamento Cadastrado!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            if (btnVariavel.getText().toString().equals("Cadastrar equipamento!")){
+                helperEquipamento.inserirEquipamento(e);
+                Snackbar.make(view, "Equipamento Cadastrado!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+            else {
+                edtID = (TextView) findViewById(R.id.textEquipID);
+                int id = Integer.parseInt(edtID.getText().toString());
+
+                e.setEquipamentoId(id);
+                helperEquipamento.updateEquipamento(e);
+                Snackbar.make(view, "Equipamento atualizado!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         }
         else {
             Snackbar.make(view, "Preencha os campos corretamente", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+        helperEquipamento.close();
+    }
+
+    public void navigateFragment(int position){
+        viewPager.setCurrentItem(position, true);
 
     }
+
 }

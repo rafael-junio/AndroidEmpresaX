@@ -43,7 +43,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = EmprestimoFragment.newInstance();
                 break;
             case 1:
-                fragment = EquipamentosFragment.newInstance(param1, param2);
+                fragment = EquipamentosFragment.newInstance();
                 break;
             case 2:
                 fragment = ListagemFragment.newInstance(param1, param2);

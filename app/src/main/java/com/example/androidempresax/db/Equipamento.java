@@ -1,6 +1,8 @@
 package com.example.androidempresax.db;
 
-public class Equipamento {
+import java.io.Serializable;
+
+public class Equipamento implements Serializable {
 
     private int equipamentoId;
     private String nomeEquip, marca;

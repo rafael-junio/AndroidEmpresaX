@@ -16,10 +16,7 @@ import com.example.androidempresax.fragments.EmprestimoFragment;
 import com.example.androidempresax.fragments.EquipamentosFragment;
 import com.example.androidempresax.fragments.ListagemFragment;
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
+
 public class CadastroSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes

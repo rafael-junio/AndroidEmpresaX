@@ -1,11 +1,14 @@
 package com.example.androidempresax.db;
 
-public class Emprestimo {
+import java.io.Serializable;
+
+public class Emprestimo implements Serializable {
     private int numEmpres;
     private int equipamentoId;
     private String nomePessoa, telefone, data;
     private boolean devolvido;
 
+    public Emprestimo(){ }
     public int getNumEmpres() {
         return numEmpres;
     }
@@ -52,5 +55,13 @@ public class Emprestimo {
 
     public void setDevolvido(boolean devolvido) {
         this.devolvido = devolvido;
+    }
+
+    public String toString() {
+        String emprestimoDevolvido = "Não";
+        if (devolvido){
+            emprestimoDevolvido = "Sim";
+        }
+        return "Nome: " + nomePessoa.toString() + " - Telefone: " + telefone.toString() + " - Devolvido: "+ emprestimoDevolvido + " - NúmEmp: " + numEmpres;
     }
 }

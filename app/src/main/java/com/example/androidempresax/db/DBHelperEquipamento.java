@@ -68,4 +68,14 @@ public class DBHelperEquipamento extends SQLiteOpenHelper {
         }
         return listaEquipamento;
     }
+
+    public void updateEquipamento(Equipamento e) {
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, e.getNomeEquip());
+        values.put(COLUMN_MARCA, e.getMarca());
+        String[] args = {String.valueOf(e.getEquipamentoId())};
+        db.update(TABLE_NAME,values,"equipamentoId=?", args);
+        db.close();
+    }
 }

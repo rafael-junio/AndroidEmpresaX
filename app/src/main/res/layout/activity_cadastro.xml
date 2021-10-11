@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".CadastroActivity">
 
+
+
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.AndroidEmpresaX.AppBarOverlay">
+
 
         <TextView
             android:id="@+id/title"
@@ -26,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="SpeakableTextPresentCheck" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
@@ -36,5 +41,7 @@
         tools:ignore="SpeakableTextPresentCheck">
 
     </androidx.viewpager.widget.ViewPager>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
