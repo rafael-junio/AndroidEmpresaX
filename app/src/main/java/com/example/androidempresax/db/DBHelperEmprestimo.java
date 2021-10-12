@@ -85,7 +85,7 @@ public class DBHelperEmprestimo extends SQLiteOpenHelper {
         db.close();
     }
 
-    public long deleteContato(Emprestimo e) {
+    public long deleteEmprestimo(Emprestimo e) {
         long retornoBD;
         db = this.getWritableDatabase();
         String[] args = {String.valueOf(e.getNumEmpres())};
@@ -103,5 +103,26 @@ public class DBHelperEmprestimo extends SQLiteOpenHelper {
         retornDB = db.update(TABLE_NAME, values,"numEmpres=?", args);
         db.close();
         return retornDB;
+    }
+
+    public boolean emprestimoExistsOnEquip(int equipamentoId) {
+        db = this.getReadableDatabase();
+        boolean emprestimoExist = false;
+        String[] columns = {COLUMN_ID, COLUMN_NAME, COLUMN_PHONE, COLUMN_DEVOLVIDO};
+
+        String[] args = {String.valueOf(equipamentoId)};
+        Cursor cursor = getReadableDatabase().query(TABLE_NAME, columns, "equipamentoId=?", args, null, null, null, null);
+
+        Emprestimo e = new Emprestimo();
+        while(cursor.moveToNext()) {
+            e.setNumEmpres(cursor.getInt(0));
+            e.setNomePessoa(cursor.getString(1));
+            e.setTelefone(cursor.getString(2));
+            e.setDevolvido(Boolean.parseBoolean(cursor.getString(3)));
+            if (!e.isDevolvido()) {
+                emprestimoExist = true;
+            }
+        }
+        return emprestimoExist;
     }
 }

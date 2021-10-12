@@ -79,7 +79,7 @@ public class DBHelperEquipamento extends SQLiteOpenHelper {
         db.close();
     }
 
-    public long deleteContato(Equipamento e) {
+    public long deleteEquipamento(Equipamento e) {
         long retornoBD;
         db = this.getWritableDatabase();
         String[] args = {String.valueOf(e.getEquipamentoId())};

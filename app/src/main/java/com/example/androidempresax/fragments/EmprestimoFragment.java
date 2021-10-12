@@ -110,7 +110,7 @@ public class EmprestimoFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 long retornoBD;
                 DBHelperEmprestimo helperEmprestimo = new DBHelperEmprestimo(getActivity());
-                retornoBD = helperEmprestimo.deleteContato(emprestimo);
+                retornoBD = helperEmprestimo.deleteEmprestimo(emprestimo);
                 helperEmprestimo.close();
                 if (retornoBD == -1) {
                     alert("Erro de exclusão!");

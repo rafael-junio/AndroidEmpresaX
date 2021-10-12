@@ -22,7 +22,9 @@ import android.widget.Toast;
 import com.example.androidempresax.CadastroActivity;
 import com.example.androidempresax.MainActivity;
 import com.example.androidempresax.R;
+import com.example.androidempresax.db.DBHelperEmprestimo;
 import com.example.androidempresax.db.DBHelperEquipamento;
+import com.example.androidempresax.db.Emprestimo;
 import com.example.androidempresax.db.Equipamento;
 
 import java.io.Serializable;
@@ -96,26 +98,34 @@ public class EquipamentosFragment extends Fragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        DBHelperEmprestimo helperEmprestimo = new DBHelperEmprestimo(getActivity());
 
-        MenuItem mDelete = menu.add(Menu.NONE, id1, 1, "Apague equipamento");
-        MenuItem mSair = menu.add(Menu.NONE, id2, 2, "Cancela");
-        mDelete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                long retornoBD;
-                DBHelperEquipamento helperEquipamento = new DBHelperEquipamento(getActivity());
-                retornoBD = helperEquipamento.deleteContato(equipamento);
-                helperEquipamento.close();
-                if (retornoBD == -1) {
-                    alert("Erro de exclusão!");
-                } else {
-                    alert("Registro excluído com sucesso!");
+        int equipID = this.equipamento.getEquipamentoId();
+        boolean emprestimoExist = helperEmprestimo.emprestimoExistsOnEquip(equipID);
+        if (!emprestimoExist) {
+            MenuItem mDelete = menu.add(Menu.NONE, id1, 1, "Apague equipamento");
+            MenuItem mSair = menu.add(Menu.NONE, id2, 2, "Cancela");
+            mDelete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    long retornoBD;
+                    DBHelperEquipamento helperEquipamento = new DBHelperEquipamento(getActivity());
+                    retornoBD = helperEquipamento.deleteEquipamento(equipamento);
+                    helperEquipamento.close();
+                    if (retornoBD == -1) {
+                        alert("Erro de exclusão!");
+                    } else {
+                        alert("Registro excluído com sucesso!");
 //                    ((MainActivity) getActivity()).navigateFragment(1);
-                    reloadActivity(v);
+                        reloadActivity(v);
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
+        else {
+            MenuItem mSair = menu.add(Menu.NONE, id2, 1, "Cancela");
+        }
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
