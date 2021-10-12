@@ -8,14 +8,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Parcelable;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.androidempresax.CadastroActivity;
+import com.example.androidempresax.MainActivity;
 import com.example.androidempresax.R;
 import com.example.androidempresax.db.DBHelperEquipamento;
 import com.example.androidempresax.db.Equipamento;
@@ -27,7 +32,8 @@ public class EquipamentosFragment extends Fragment {
 
     private static String selectedItem;
     public ListView listEquipamentos;
-    View fragmentoEmprestimo;
+    Equipamento equipamento;
+    private int id1, id2;
 
     ArrayList<Equipamento> arrayListEquipamento;
     ArrayAdapter<Equipamento> equipamentoArrayAdapter;
@@ -54,7 +60,7 @@ public class EquipamentosFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_equipamentos, container, false);
     }
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
     }
 
@@ -78,7 +84,48 @@ public class EquipamentosFragment extends Fragment {
                 startActivity(it);
             }
         });
+        listEquipamentos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                equipamento = equipamentoArrayAdapter.getItem(position);
+                return false;
+            }
+        });
 
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        MenuItem mDelete = menu.add(Menu.NONE, id1, 1, "Apague equipamento");
+        MenuItem mSair = menu.add(Menu.NONE, id2, 2, "Cancela");
+        mDelete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                long retornoBD;
+                DBHelperEquipamento helperEquipamento = new DBHelperEquipamento(getActivity());
+                retornoBD = helperEquipamento.deleteContato(equipamento);
+                helperEquipamento.close();
+                if (retornoBD == -1) {
+                    alert("Erro de exclusão!");
+                } else {
+                    alert("Registro excluído com sucesso!");
+//                    ((MainActivity) getActivity()).navigateFragment(1);
+                    reloadActivity(v);
+                }
+                return false;
+            }
+        });
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    private void alert(String s) {
+        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+    }
+
+    public void reloadActivity(View view) {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        getActivity().finish();
+        startActivity(intent);
+    }
 }

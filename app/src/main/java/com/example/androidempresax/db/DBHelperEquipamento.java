@@ -78,4 +78,12 @@ public class DBHelperEquipamento extends SQLiteOpenHelper {
         db.update(TABLE_NAME,values,"equipamentoId=?", args);
         db.close();
     }
+
+    public long deleteContato(Equipamento e) {
+        long retornoBD;
+        db = this.getWritableDatabase();
+        String[] args = {String.valueOf(e.getEquipamentoId())};
+        retornoBD = db.delete(TABLE_NAME, COLUMN_ID + "=?", args);
+        return retornoBD;
+    }
 }

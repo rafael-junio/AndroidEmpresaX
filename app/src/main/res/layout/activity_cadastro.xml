@@ -7,7 +7,6 @@
     tools:context=".CadastroActivity">
 
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -41,7 +40,6 @@
         tools:ignore="SpeakableTextPresentCheck">
 
     </androidx.viewpager.widget.ViewPager>
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

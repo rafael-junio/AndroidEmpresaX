@@ -23,7 +23,7 @@ import com.example.androidempresax.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
+    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,5 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
-
+    public void navigateFragment(int position){
+        viewPager.setCurrentItem(position, true);
+    }
 }

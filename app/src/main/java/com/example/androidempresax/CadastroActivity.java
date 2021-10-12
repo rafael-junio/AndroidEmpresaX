@@ -1,6 +1,7 @@
 package com.example.androidempresax;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -57,7 +58,6 @@ public class CadastroActivity extends AppCompatActivity {
     ArrayList<Equipamento> arrayListEquipamento;
     ArrayAdapter<Equipamento> equipamentoArrayAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,10 +102,9 @@ public class CadastroActivity extends AppCompatActivity {
             Snackbar.make(view, "Preencha os campos corretamente", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
-
+        reloadActivity(view);
     }
 
-    @SuppressLint("ResourceType")
     public void cadastrarEquipamento(View view) {
         edtNome = findViewById(R.id.textEquipName);
         edtMarca = findViewById(R.id.textMarca);
@@ -121,6 +120,7 @@ public class CadastroActivity extends AppCompatActivity {
                 helperEquipamento.inserirEquipamento(e);
                 Snackbar.make(view, "Equipamento Cadastrado!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                reloadActivity(view);
             }
             else {
                 edtID = (TextView) findViewById(R.id.textEquipID);
@@ -130,6 +130,8 @@ public class CadastroActivity extends AppCompatActivity {
                 helperEquipamento.updateEquipamento(e);
                 Snackbar.make(view, "Equipamento atualizado!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                reloadActivity(view);
+
             }
         }
         else {
@@ -137,11 +139,16 @@ public class CadastroActivity extends AppCompatActivity {
                     .setAction("Action", null).show();
         }
         helperEquipamento.close();
+
     }
 
     public void navigateFragment(int position){
         viewPager.setCurrentItem(position, true);
-
     }
 
+    public void reloadActivity(View view) {
+        Intent intent = new Intent(CadastroActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
 }
