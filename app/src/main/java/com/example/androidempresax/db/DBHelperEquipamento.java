@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class DBHelperEquipamento extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "androidEmpresa.db";
+    private static final String DATABASE_NAME = "equipamento.db";
     private static final String TABLE_NAME = "equipamento";
     private static final String COLUMN_ID = "equipamentoId";
     private static final String COLUMN_NAME = "nomeEquip";
@@ -86,4 +86,19 @@ public class DBHelperEquipamento extends SQLiteOpenHelper {
         retornoBD = db.delete(TABLE_NAME, COLUMN_ID + "=?", args);
         return retornoBD;
     }
+
+    public Equipamento selectOneEquipamento(int equipamentoId) {
+        db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ID, COLUMN_NAME, COLUMN_MARCA};
+
+        String[] args = {String.valueOf(equipamentoId)};
+        Cursor cursor = getReadableDatabase().query(TABLE_NAME, columns, "equipamentoId=?", args, null, null, "upper(nomeEquip)", null);
+
+        Equipamento e = new Equipamento();
+        e.setEquipamentoId(cursor.getInt(0));
+        e.setNomeEquip(cursor.getString(1));
+        e.setMarca(cursor.getString(2));
+        return e;
+    }
+
 }

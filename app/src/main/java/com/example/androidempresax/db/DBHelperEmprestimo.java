@@ -25,7 +25,7 @@ public class DBHelperEmprestimo extends SQLiteOpenHelper {
 
     private static final String TABLE_CREATE = "CREATE TABLE emprestimo" +
             "(numEmpres integer primary key autoincrement, equipamentoId integer not null, nomePessoa text not null," +
-            "telefone text not null, data text not null, devolvido bool not null);";
+            "telefone text not null, data datetime default (datetime('now','localtime')), devolvido bool not null);";
 
     public DBHelperEmprestimo(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,7 +52,6 @@ public class DBHelperEmprestimo extends SQLiteOpenHelper {
         values.put(COLUMN_ID_EQUIP, e.getEquipamentoId());
         values.put(COLUMN_NAME, e.getNomePessoa());
         values.put(COLUMN_PHONE, e.getTelefone());
-        values.put(COLUMN_DATE, "GENERATE_DATE_AUTO");
         values.put(COLUMN_DEVOLVIDO, false);
         db.insert(TABLE_NAME, null, values);
         db.close();
@@ -76,5 +75,36 @@ public class DBHelperEmprestimo extends SQLiteOpenHelper {
             listaEmprestimo.add(e);
         }
         return listaEmprestimo;
+    }
+
+    public void updateEmprestimo(Emprestimo e) {
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, e.getNomePessoa());
+        values.put(COLUMN_PHONE, e.getTelefone());
+        values.put(COLUMN_ID_EQUIP, e.getEquipamentoId());
+        String[] args = {String.valueOf(e.getNumEmpres())};
+        db.update(TABLE_NAME,values,"numEmpres=?", args);
+        db.close();
+    }
+
+    public long deleteContato(Emprestimo e) {
+        long retornoBD;
+        db = this.getWritableDatabase();
+        String[] args = {String.valueOf(e.getNumEmpres())};
+        retornoBD = db.delete(TABLE_NAME, COLUMN_ID + "=?", args);
+        return retornoBD;
+    }
+
+    public long devolverEmprestimo(Emprestimo e) {
+        long retornDB;
+        db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DEVOLVIDO, "true");
+        String[] args = {String.valueOf(e.getNumEmpres())};
+        retornDB = db.update(TABLE_NAME, values,"numEmpres=?", args);
+        db.close();
+        return retornDB;
     }
 }

@@ -1,28 +1,29 @@
 package com.example.androidempresax.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.androidempresax.CadastroActivity;
 import com.example.androidempresax.R;
 import com.example.androidempresax.db.DBHelperEmprestimo;
 import com.example.androidempresax.db.DBHelperEquipamento;
+import com.example.androidempresax.db.Emprestimo;
 import com.example.androidempresax.db.Equipamento;
 
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 
@@ -30,7 +31,12 @@ public class CadastroEmprestimoFragment extends Fragment {
 
     private static String selectedItem;
     public ListView listEquipamentos;
+    private EditText edtNome, edtTelefone;
+    private TextView edtID;
+    private Button btnVariavel;
     View fragmentoEmprestimo;
+
+    Emprestimo emprestimo, altEmprestimo;
 
     ArrayList<Equipamento> arrayListEquipamento;
     ArrayAdapter<Equipamento> equipamentoArrayAdapter;
@@ -65,7 +71,17 @@ public class CadastroEmprestimoFragment extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        listEquipamentos = (ListView) getView().findViewById(R.id.listEquipamentos);
+        Intent it = getActivity().getIntent();
+        altEmprestimo = (Emprestimo) it.getSerializableExtra("chave_emprestimo");
+        emprestimo = new Emprestimo();
+        DBHelperEmprestimo helperEmprestimo = new DBHelperEmprestimo(getActivity());
+
+        edtNome = getView().findViewById(R.id.textPersonName);
+        edtTelefone = getView().findViewById(R.id.textPhone);
+        edtID = (TextView) getView().findViewById(R.id.textEmpID);
+        btnVariavel = getView().findViewById(R.id.buttonEmp);
+
+        listEquipamentos = (ListView) getView().findViewById(R.id.listEquipamentosCad);
         registerForContextMenu(listEquipamentos);
         DBHelperEquipamento helperEquipamento = new DBHelperEquipamento(getActivity());
         arrayListEquipamento = helperEquipamento.selectAllEquipamentos();
@@ -83,11 +99,26 @@ public class CadastroEmprestimoFragment extends Fragment {
             }
         });
 
+        if (altEmprestimo != null) {
+            ((CadastroActivity)getActivity()).navigateFragment(0);
+            btnVariavel.setText("Atualizar emprestimo");
+            edtNome.setText(altEmprestimo.getNomePessoa());
+            edtTelefone.setText(altEmprestimo.getTelefone());
+            int id = altEmprestimo.getNumEmpres();
+            edtID.setText(String.valueOf(id));
+            emprestimo.setNumEmpres(altEmprestimo.getNumEmpres());
+        }
+        else {
+            btnVariavel.setText("Cadastrar Emprestimo!");
+        }
     }
 
     public static String getSelectedItem() {
         return selectedItem;
     }
 
+    public static void setSelectedItemNull(){
+        selectedItem = null;
+    }
 
 }

@@ -8,6 +8,7 @@ public class Emprestimo implements Serializable {
     private String nomePessoa, telefone, data;
     private boolean devolvido;
 
+
     public Emprestimo(){ }
     public int getNumEmpres() {
         return numEmpres;
@@ -62,6 +63,6 @@ public class Emprestimo implements Serializable {
         if (devolvido){
             emprestimoDevolvido = "Sim";
         }
-        return "Nome: " + nomePessoa.toString() + " - Telefone: " + telefone.toString() + " - Devolvido: "+ emprestimoDevolvido + " - NúmEmp: " + numEmpres;
+        return "Nome: " + nomePessoa.toString() + " - Equipamento ID: " + equipamentoId + " - Devolvido: "+ emprestimoDevolvido + " - Data: " + data;
     }
 }

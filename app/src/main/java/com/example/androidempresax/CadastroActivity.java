@@ -83,6 +83,8 @@ public class CadastroActivity extends AppCompatActivity {
         String nome = edtNome.getText().toString();
         String telefone = edtPhone.getText().toString();
         String selectedItem = CadastroEmprestimoFragment.getSelectedItem();
+        CadastroEmprestimoFragment.setSelectedItemNull();
+        btnVariavel = findViewById(R.id.buttonEmp);
 
         if (!nome.equals("") && !telefone.equals("") && selectedItem != null) {
             String equipamentoIDStr = selectedItem.substring(selectedItem.indexOf("ID: ") + 4);
@@ -94,15 +96,28 @@ public class CadastroActivity extends AppCompatActivity {
             e.setEquipamentoId(equipamentoID);
             e.setDevolvido(false);
 
-            helperEmprestimo.inserirEmprestimo(e);
-            Snackbar.make(view, "Emprestímo realizado!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            if (btnVariavel.getText().toString().equals("Cadastrar Emprestimo!")) {
+
+                helperEmprestimo.inserirEmprestimo(e);
+                Snackbar.make(view, "Emprestímo realizado!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                reloadActivity(view);
+            }
+            else {
+                edtID = (TextView) findViewById(R.id.textEmpID);
+                int id = Integer.parseInt(edtID.getText().toString());
+
+                e.setNumEmpres(id);
+                helperEmprestimo.updateEmprestimo(e);
+                Snackbar.make(view, "Emprestimo atualizado!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                reloadActivity(view);
+            }
         }
         else {
             Snackbar.make(view, "Preencha os campos corretamente", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
-        reloadActivity(view);
     }
 
     public void cadastrarEquipamento(View view) {

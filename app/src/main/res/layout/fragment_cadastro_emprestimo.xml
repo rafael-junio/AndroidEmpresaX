@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textPhone" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonEmp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="112dp"
@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <ListView
-        android:id="@+id/listEquipamentos"
+        android:id="@+id/listEquipamentosCad"
         android:layout_width="359dp"
         android:layout_height="491dp"
         android:layout_marginStart="27dp"
@@ -67,4 +67,12 @@
         android:choiceMode="singleChoice"
         android:listSelector="@android:color/darker_gray" />
 
+    <TextView
+        android:id="@+id/textEmpID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="132dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
