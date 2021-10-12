@@ -58,9 +58,6 @@ public class DBHelperEmprestimo extends SQLiteOpenHelper {
     }
 
     public ArrayList<Emprestimo> selectEmprestimosEfetuados() {
-        String[] columns = {COLUMN_ID, COLUMN_ID_EQUIP, COLUMN_NAME, COLUMN_PHONE, COLUMN_DATE, COLUMN_DEVOLVIDO};
-
-//        Cursor cursor = getReadableDatabase().query(TABLE_NAME, columns, null, null, null, null, "upper(numEmpres)", null);
         Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM emprestimo", null);
         ArrayList<Emprestimo> listaEmprestimo = new ArrayList<Emprestimo>();
         while(cursor.moveToNext()){
